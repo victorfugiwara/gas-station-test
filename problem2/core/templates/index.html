@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+
 {% block content %}
 
 	<div class="row">
@@ -12,7 +14,7 @@
 
 				<div class="form-group">
 					<label for="manual_test">Manual test</label>
-					<input type="text" class="form-control" name="manual_test" id="manual_test" value="{{manual}}">
+					<input type="text" class="form-control" name="manual_test" id="manual_test" value="{{manual}}" placeholder='"4","3:1","2:2","1:2","0:1"' data-toggle="tooltip" data-placement="top" title="N which will be the number of gas stations in a circular route and each subsequent element will be the string g:c where g is the amount of gas in gallons at that gas station and c will be the amount of gallons of gas needed to get to the following gas station.">
 				</div>
 
 				<div class="form-group">
@@ -38,4 +40,8 @@
 		</div>
 	</div>
 
+{% endblock %}
+
+{% block js %}	
+	<script src="{% static 'js/index.js' %}"></script>
 {% endblock %}

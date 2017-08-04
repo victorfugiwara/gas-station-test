@@ -26,24 +26,31 @@ def index(request):
 
 
 def validateTestString(test, show_data):
-    test = test.replace('"', '').replace("'", "").rstrip('\r\n')
-    array_values = test.split(',')
-    n = int(array_values[0])
-    stations = len(array_values)-1
-    if n != stations:
-        return 'Invalid number of stations. N={} and array contains {} station(s)'.format(n, stations)
-    else:
-        index_start = GasStation(test)
-        if index_start:
-            if show_data:
-                return '{} - {}'.format(test, index_start)
-            else:
-                return index_start
+    try:
+        test = test.replace('"', '').replace("'", "").rstrip('\r\n')
+        array_values = test.split(',')
+        n = int(array_values[0])
+        stations = len(array_values)-1
+        if n != stations:
+            return 'Invalid number of stations. N={} and array contains {} station(s)'.format(n, stations)
         else:
-            if show_data:
-                return '{} - Impossible'.format(test)
+            index_start = GasStation(test)
+            if index_start:
+                if show_data:
+                    return '{} - {}'.format(test, index_start)
+                else:
+                    return index_start
             else:
-                return 'Impossible'
+                if show_data:
+                    return '{} - Impossible'.format(test)
+                else:
+                    return 'Impossible'
+    except ValueError as e:
+        return '{} - Invalid format.'.format(test)
+    except IndexError as e:
+        return '{} - The parameters of the gas stations must be in the format g:c.'.format(test)
+    except Exception as e:
+        return 'A problem has occurred. {}'.format(e)
 
 
 def GasStation(strArr):
